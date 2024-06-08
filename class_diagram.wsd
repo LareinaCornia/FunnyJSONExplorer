@@ -1,0 +1,38 @@
+@startuml
+abstract class Component {
+    - style: str
+    - icon_family: str
+    + Component(style: str, icon_family: str)
+    + draw(indent: str, is_last: bool): void
+}
+
+class Leaf {
+    - name: str
+    + Leaf(name: str, style: str, icon_family: str)
+    + draw(indent: str, is_last: bool): void
+}
+
+class Container {
+    - icon: str
+    - name: str
+    - level: int
+    - children: List[Component]
+    + Container(icon: str, name: str, level: int, style: str, icon_family: str)
+    + add(component: Component): void
+    + remove(component: Component): void
+    + draw(indent: str, is_last: bool): void
+}
+
+class FunnyJsonExplorer {
+    - style: str
+    - icon_family: str
+    - root: Component
+    + FunnyJsonExplorer(style: str, icon_family: str)
+    + _load(json_data: str): void
+    + show(): void
+}
+
+Component <|-- Leaf
+Component <|-- Container
+FunnyJsonExplorer o-- Component
+@enduml
